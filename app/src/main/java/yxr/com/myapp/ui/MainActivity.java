@@ -67,7 +67,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        } else {
+            initMediaPlayer();
+        }
         final Button btn1 = (Button) findViewById(R.id.main_btn1);
         btn1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -113,21 +117,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn13_2.setOnClickListener(this);
         Button btn13_3 = (Button) findViewById(R.id.main_btn13_3);
         btn13_3.setOnClickListener(this);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-        } else {
-            initMediaPlayer();
-        }
+        Button btn14 = (Button) findViewById(R.id.main_btn14);
+        btn14.setOnClickListener(this);
+
 
     }
 
     private void initMediaPlayer() {
+        File file = null;
         try {
-            File file = new File(Environment.getExternalStorageDirectory(),"if.map3");
-            Logger.log("initMediaPlayer",file.getPath());
+            file = new File(Environment.getExternalStorageDirectory(), "if.mp3");
+            Logger.log("initMediaPlayer", file.getPath());
             mediaPlayer.setDataSource(file.getPath());
             mediaPlayer.prepare();
         } catch (Exception e) {
+            AlterMessage.toast(this, "没有找到" + file.getAbsolutePath());
             e.printStackTrace();
         }
     }
@@ -136,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(netChangeReceiver);
-        if(mediaPlayer != null){
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
         }
@@ -158,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case 2:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     initMediaPlayer();
                 } else {
                     AlterMessage.toast(MainActivity.this, "you permission failed");
@@ -280,20 +284,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, CameraActivity.class));
                 break;
             case R.id.main_btn13_1:
-                if(!mediaPlayer.isPlaying()){
+                if (!mediaPlayer.isPlaying()) {
                     mediaPlayer.start();
                 }
                 break;
             case R.id.main_btn13_2:
-                if(mediaPlayer.isPlaying()){
-                    mediaPlayer.stop();
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
                 }
                 break;
             case R.id.main_btn13_3:
-                if(mediaPlayer.isPlaying()){
+                if (mediaPlayer.isPlaying()) {
                     mediaPlayer.reset();
                     initMediaPlayer();
                 }
+                break;
+            case R.id.main_btn14:
+                startActivity(new Intent(MainActivity.this, MedialPlayerActivity.class));
                 break;
         }
 

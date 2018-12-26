@@ -106,6 +106,13 @@
                 android:layout_margin="5dp"
                 android:id="@+id/main_btn13_3"/>
         </LinearLayout>
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="视频"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:id="@+id/main_btn14"/>
     </LinearLayout>
 </ScrollView>
