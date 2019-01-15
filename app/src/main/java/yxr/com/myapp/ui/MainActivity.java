@@ -1,7 +1,6 @@
 package yxr.com.myapp.ui;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -12,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -21,7 +19,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
 import android.support.annotation.RequiresApi;
@@ -29,25 +26,28 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.MapView;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         netChangeReceiver = new NetChangeReceiver();
         registerReceiver(netChangeReceiver, intentFilter);
 
+
         Button btn5 = (Button) findViewById(R.id.main_btn5);
         btn5.setOnClickListener(this);
         Button btn6 = (Button) findViewById(R.id.main_btn6);
@@ -119,8 +120,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn13_3.setOnClickListener(this);
         Button btn14 = (Button) findViewById(R.id.main_btn14);
         btn14.setOnClickListener(this);
-
-
+        Button btn15 = findViewById(R.id.main_btn15);
+        btn15.setOnClickListener(this);
+        Button btn16 = findViewById(R.id.main_btn16);
+        btn16.setOnClickListener(this);
+        Button btn17 = findViewById(R.id.main_btn17);
+        btn17.setOnClickListener(this);
+        Button btn18 = findViewById(R.id.main_btn18);
+        btn18.setOnClickListener(this);
+        Button btn19 = findViewById(R.id.main_btn19);
+        btn19.setOnClickListener(this);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     private void initMediaPlayer() {
@@ -132,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mediaPlayer.prepare();
         } catch (Exception e) {
             AlterMessage.toast(this, "没有找到" + file.getAbsolutePath());
-            e.printStackTrace();
+
         }
     }
 
@@ -144,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mediaPlayer.stop();
             mediaPlayer.release();
         }
+
     }
 
     @Override
@@ -302,9 +314,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_btn14:
                 startActivity(new Intent(MainActivity.this, MedialPlayerActivity.class));
                 break;
+            case R.id.main_btn15:
+                startActivity(new Intent(MainActivity.this, WebViewTestActivity.class));
+                break;
+            case R.id.main_btn16:
+                startActivity(new Intent(MainActivity.this, HttpUrlConectionTestActivity.class));
+                break;
+            case R.id.main_btn17:
+                startActivity(new Intent(MainActivity.this, XMLPullSaxActivity.class));
+                break;
+            case R.id.main_btn18:
+                startActivity(new Intent(MainActivity.this, TestServiceActivity.class));
+                break;
+            case R.id.main_btn19:
+                startActivity(new Intent(MainActivity.this,MapActivity.class));
+                break;
         }
 
     }
+
+
 
     private void call() {
         try {
@@ -330,4 +359,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+        return true;
+    }
+
 }

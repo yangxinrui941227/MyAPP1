@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.XMLPullSaxActivity">
+
+    <Button
+        android:id="@+id/pull"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="pull" />
+
+    <Button
+        android:id="@+id/sax"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="sax" />
+
+    <Button
+        android:id="@+id/json_obj"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="jsonobject" />
+
+ <Button
+        android:id="@+id/gson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="gson" />
+
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

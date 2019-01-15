@@ -8,7 +8,17 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.VIBRATE" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/> -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
@@ -17,7 +27,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:label">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:label"
+
+        >
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="9e2TCpUUR8xdj4y6oHTBFgn1lE2nQEc7" />
+
         <activity android:name=".ui.UIActitvty" />
         <activity android:name=".ui.SecondActivity">
             <intent-filter>
@@ -80,18 +97,36 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ui.CameraActivity"></activity>
+        <activity android:name=".ui.CameraActivity" />
+
         <provider
-            android:authorities="com.example.cameraalbumtest.fileprovider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.cameraalbumtest.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            >
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"
-                ></meta-data>
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name=".ui.MedialPlayerActivity"></activity>
+
+        <activity android:name=".ui.MedialPlayerActivity" />
+        <activity android:name=".ui.WebViewTestActivity" />
+        <activity android:name=".ui.HttpUrlConectionTestActivity" />
+        <activity android:name=".ui.XMLPullSaxActivity" />
+
+        <service
+            android:name=".service.TestService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".ui.TestServiceActivity" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <activity android:name=".ui.MapActivity"></activity>
     </application>
 
 </manifest>
